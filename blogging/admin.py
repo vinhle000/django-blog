@@ -1,6 +1,28 @@
 from django.contrib import admin
 from blogging.models import Post, Category
 
+
+class CategoryInline(admin.TabularInline):
+    model = Category.posts.through
+
+
+class PostAdmin(admin.ModelAdmin):
+    inlines = [
+        CategoryInline,
+    ]
+
+
+class CategoryAdmin(admin.ModelAdmin):
+    inlines = [
+        CategoryInline,
+    ]
+    exclude = ('posts',)
+    # fields = (
+    #     'name',
+    #     'description'
+    # )
+
+
 # and a new admin registration
-admin.site.register(Post)
-admin.site.register(Category)
+admin.site.register(Post, PostAdmin)
+admin.site.register(Category, CategoryAdmin)
