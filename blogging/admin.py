@@ -16,7 +16,7 @@ class CategoryAdmin(admin.ModelAdmin):
     inlines = [
         CategoryInline,
     ]
-    exclude = ('posts',)
+    exclude = ("posts",)
     # fields = (
     #     'name',
     #     'description'
