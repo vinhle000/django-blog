@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from blogging.models import Post, Category
-from rest_framework import serializers
+from rest_framework import serializers, permissions
 
 
 """ requests.get("http://fierce-crag-38242.herokuapp.com/api/posts/").json()
@@ -16,15 +16,14 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
         fields = ['url', 'username', 'email']
+        permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
 class PostSerializer(serializers.HyperlinkedModelSerializer):
-   # url = serializers.HyperlinkedIdentityField(view_name="api:user-detail")
-   # url = serializers.HyperlinkedIdentityField(view_name='user-detail', source='profile')
-
     class Meta:
         model = Post
         fields = ['url', 'title', 'text', 'created_date', 'modified_date', 'published_date', 'author']
+
 
 
 class CategorySerializer(serializers.HyperlinkedModelSerializer):
